@@ -1,5 +1,5 @@
 import {useTheme} from '@react-navigation/native';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {CUSTOMFONT_REGULAR} from '../../constants/fonts';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import {SafeAreaView} from 'react-native-safe-area-context';

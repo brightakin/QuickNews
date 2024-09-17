@@ -11,7 +11,6 @@ import AuthStack from './authStack';
 import {useAppSelector} from '../hooks/reduxHooks';
 import {authentication} from '../redux/slices/auth';
 import MainStack from './mainStack';
-import analyticsMiddleware from '../helpers/analytics';
 
 const AppNavigation = (): JSX.Element => {
   const Stack = createStackNavigator();
@@ -20,14 +19,7 @@ const AppNavigation = (): JSX.Element => {
 
   return (
     <PaperProvider theme={isDarkMode ? DarkTheme : DefaultTheme}>
-      <NavigationContainer
-        onStateChange={async (state: any) => {
-          const routeName = state.routes[state.index].name;
-          analyticsMiddleware.logScreenChange({
-            routeName,
-          });
-        }}
-        theme={isDarkMode ? DarkTheme : DefaultTheme}>
+      <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
         {authenticated ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     </PaperProvider>

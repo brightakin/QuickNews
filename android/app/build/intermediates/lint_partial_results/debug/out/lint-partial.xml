@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.2.1" type="partial_results">
+    <map id="UnsafeIntentLaunch">
+            <map id="unprotected">
+                <entry
+                    name="com.quicknews.MainActivity"
+                    boolean="true"/>
+            </map>
+    </map>
+    <map id="UnusedResources">
+        <entry
+            name="model"
+            string="integer[react_native_dev_server_port(D)],mipmap[ic_launcher_round(U),ic_launcher_foreground(D),ic_launcher(U)],string[app_name(U)],style[Theme_AppCompat_DayNight_NoActionBar(R),AppTheme(U)];6^5;;;"/>
+        <location id="R.mipmap.ic_launcher_foreground"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/mipmap-hdpi/ic_launcher_foreground.png"/>
+        <location id="R.integer.react_native_dev_server_port"
+            file="${:app*projectDir}/build.gradle"/>
+    </map>
+
+</incidents>

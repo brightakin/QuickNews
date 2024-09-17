@@ -6,7 +6,7 @@ import rootReducer from './rootReducers';
 // ...
 
 const persistConfig = {
-  key: 'lendsqr',
+  key: 'quicknews',
   storage: AsyncStorage,
   blacklist: ['auth'],
   stateReconciler: autoMergeLevel2,

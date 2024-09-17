@@ -1,8 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
-apply plugin: "com.google.gms.google-services"
-apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 
 project.ext.vectoricons = [
@@ -61,7 +59,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -80,10 +78,20 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
-
-    namespace "com.lendsqr"
+    packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+            dex {
+                useLegacyPackaging true
+            }
+        }
+    aaptOptions {
+        cruncherEnabled = false
+    }
+    namespace "com.quicknews"
     defaultConfig {
-        applicationId "com.lendsqr"
+        applicationId "com.quicknews"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -105,7 +113,9 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
+            shrinkResources true
+            setProguardFiles([getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'])
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -114,9 +124,6 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-analytics")
     implementation "androidx.browser:browser:1.2.0"
 
     if (hermesEnabled.toBoolean()) {
@@ -126,4 +133,17 @@ dependencies {
     }
 }
 
+tasks.configureEach {
+        if (name == 'generateReleaseLintVitalReportModel') {
+            dependsOn('copyReactNativeVectorIconFonts')
+        }
+        if (name == 'generateDebugLintReportModel') {
+            dependsOn('copyReactNativeVectorIconFonts')
+        }
+        if (name == 'lintAnalyzeDebug') {
+            dependsOn('copyReactNativeVectorIconFonts')
+        }
+    }
+
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+

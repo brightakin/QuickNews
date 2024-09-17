@@ -1,42 +1,15 @@
 import React, {useState} from 'react';
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import {View, TextInput, TouchableOpacity, Text} from 'react-native';
 
 // Styles && Constants && SVGs
 import Styles from './styles';
-import styled from 'styled-components/native';
 import {COLORS} from '../../constants/theme';
 import styles from './styles';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {CUSTOMFONT_REGULAR} from '../../constants/fonts';
 import Feather from 'react-native-vector-icons/Feather';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {CustomTextInputProps} from '../../@types/defaultProps';
-
-const CountryWrap = styled.TouchableOpacity`
-  height: 110%;
-  width: 72px;
-  background-color: rgba(110, 116, 172, 0.05);
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-`;
-
-const FlagImage = styled.Image`
-  width: 32.31px;
-  height: 24.23px;
-  border-radius: 10px;
-  margin-right: 12px;
-`;
 
 const CustomInput = ({
   children,
@@ -56,8 +29,6 @@ const CustomInput = ({
   setOtp,
   ...props
 }: CustomTextInputProps): JSX.Element => {
-  const viewWrapStyle = props?.viewWrapStyle;
-  const [modalIsVisible, setModalIsVisble]: any = useState();
   let borderColor;
   if (touched && error) {
     borderColor = 'red';
@@ -91,6 +62,7 @@ const CustomInput = ({
                   fontFamily: CUSTOMFONT_REGULAR,
                   padding: heightPercentageToDP(1),
                   color: colors.text,
+                  fontWeight: '300',
                 },
               ]}
               {...props}
@@ -134,6 +106,7 @@ const CustomInput = ({
                   fontFamily: CUSTOMFONT_REGULAR,
                   padding: heightPercentageToDP(1),
                   color: colors.text,
+                  fontWeight: '300',
                 },
               ]}
               {...props}
@@ -187,6 +160,7 @@ const CustomInput = ({
                     fontFamily: CUSTOMFONT_REGULAR,
                     padding: heightPercentageToDP(1),
                     color: colors.text,
+                    fontWeight: '300',
                   },
                 ]}
                 {...props}

@@ -1,5 +1,9 @@
 export const LOGIN = 'LoginScreen';
 export const SIGNUP = 'SignUpScreen';
-export const OAUTH = 'OauthScreen';
-export const NEWSLISTING = 'NewsListingScreen';
+export const NEWSLISTING = 'News';
 export const NEWSDETAILS = 'NewsDetailsScreen';
+export const ABOUT = 'About';
+export const BOTTOMTABS = 'BottomTabs';
+export const ONBOARDING = 'Onboarding';
+export const WEBVIEW = 'WebviewScreen';
+export const FORGOTPASSWORD = 'ForgoutPassword';

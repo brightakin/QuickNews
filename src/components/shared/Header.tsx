@@ -2,6 +2,7 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import {CUSTOMFONT_REGULAR} from '../../constants/fonts';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import React from 'react';
 
 const Header = ({
   title,

@@ -18,7 +18,8 @@ export interface CustomTextInputProps extends RNCustomTextInput {
     | 'account_number'
     | 'trade_amount'
     | 'default'
-    | 'otp';
+    | 'otp'
+    | 'email';
   icon?: any;
   onPress?: (...args: any) => void;
   email?: string;
@@ -47,4 +48,11 @@ export interface SegmentControlProps {
   badgeValues?: Array<number | null>;
   inactiveBadgeStyle?: ViewStyle;
   activeBadgeStyle?: ViewStyle;
+}
+
+export interface UserProps {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }

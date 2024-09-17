@@ -1,10 +1,10 @@
 import {TouchableOpacity, StyleSheet, ActivityIndicator} from 'react-native';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
-
+import {CUSTOMFONT_REGULAR} from '../../constants/fonts';
 import {COLORS} from '../../constants/theme';
 import {Text} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {CUSTOMFONT_REGULAR} from '../../constants/fonts';
+import {fontPixel, heightPixel} from '../../utils/normalize';
+import React from 'react';
 // import {trigger} from 'react-native-haptic-feedback';
 
 // Optional configuration
@@ -21,10 +21,12 @@ const Button = ({
   customStyles,
   onPress,
   titleStyles,
+  disabled,
+  children,
 }: any): JSX.Element => {
   return (
     <TouchableOpacity
-      disabled={loading}
+      disabled={loading || disabled}
       onPress={() => {
         if (loading) {
           return;
@@ -33,22 +35,21 @@ const Button = ({
           // trigger('impactMedium', options);
         }
       }}
-      style={[customStyles]}>
-      <LinearGradient
-        style={[styles.bgContainer, customStyles]}
-        colors={[COLORS.primaryBlue, COLORS.secondaryBlue]}>
-        {!loading && (
-          <Text
-            style={[
-              styles.primaryText,
-              {color: 'white', fontWeight: '600'},
-              titleStyles,
-            ]}>
-            {title}
-          </Text>
-        )}
-        {loading && <ActivityIndicator size="small" color="white" />}
-      </LinearGradient>
+      style={[
+        styles.bgContainer,
+        {
+          backgroundColor: disabled
+            ? 'rgba(40, 167, 69, 0.39)'
+            : COLORS.primaryOrange,
+        },
+        customStyles,
+      ]}>
+      {!loading && (
+        <Text style={[styles.primaryText, {color: 'white'}, titleStyles]}>
+          {title} {children ?? children}
+        </Text>
+      )}
+      {loading && <ActivityIndicator size="small" color="white" />}
     </TouchableOpacity>
   );
 };
@@ -56,18 +57,15 @@ const Button = ({
 export default Button;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: heightPercentageToDP(2.5),
-    paddingVertical: heightPercentageToDP(4),
-  },
   flexContainer: {
     flexDirection: 'row',
   },
   primaryText: {
-    fontSize: heightPercentageToDP(2.5),
+    fontSize: fontPixel(16),
     fontFamily: CUSTOMFONT_REGULAR,
     textAlign: 'center',
+    lineHeight: 16.13,
+    fontWeight: '500',
   },
   secondaryText: {
     fontSize: heightPercentageToDP(1.2),
@@ -75,10 +73,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bgContainer: {
-    paddingHorizontal: heightPercentageToDP(2),
-    paddingVertical: heightPercentageToDP(2),
+    backgroundColor: COLORS.primaryGreen,
+    paddingHorizontal: heightPixel(15),
+    paddingVertical: heightPixel(20),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 24,
   },
 });

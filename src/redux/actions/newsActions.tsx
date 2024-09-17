@@ -1,43 +1,38 @@
-import axios from 'axios';
 import {
   GET_NEWS_FAIL,
   GET_NEWS_REQUEST,
   GET_NEWS_SUCCESS,
 } from '../../constants/newsConstants';
 
-export const baseUrl = 'https://admin.zenfipay.com/api';
-
-export const getNews = () => async (dispatch: any) => {
-  try {
-    dispatch({
-      type: GET_NEWS_REQUEST,
-    });
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    axios
-      .get(
-        'https://newsapi.org/v2/top-headlines?country=us&apiKey=4e1e0bf03911400aa33fce601bfa5618',
-        config,
-      )
-      .then(res => {
-        let data = res.data;
-
-        dispatch({
-          type: GET_NEWS_SUCCESS,
-          payload: data.articles,
-        });
+export const getNews =
+  (startIndex = 0, batchSize = 20, append = false) =>
+  async (dispatch: any, getState: any) => {
+    try {
+      dispatch({
+        type: GET_NEWS_REQUEST,
       });
-  } catch (error: any) {
-    dispatch({
-      type: GET_NEWS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+
+      const url = 'https://hacker-news.firebaseio.com/v0/newstories.json';
+      const response = await fetch(url);
+      const json = await response.json();
+
+      // Fetch only a portion of the news stories based on startIndex and batchSize
+      const idsToFetch = json.slice(startIndex, startIndex + batchSize);
+      const promises = idsToFetch.map((id: any) =>
+        fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(
+          response => response.json(),
+        ),
+      );
+      const result = await Promise.all(promises);
+
+      dispatch({
+        type: GET_NEWS_SUCCESS,
+        payload: {news: result, append},
+      });
+    } catch (error: any) {
+      dispatch({
+        type: GET_NEWS_FAIL,
+        payload: error.message ? error.message : 'An error occurred',
+      });
+    }
+  };

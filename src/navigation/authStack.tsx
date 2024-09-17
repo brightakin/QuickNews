@@ -1,14 +1,23 @@
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignUpScreen from '../screens/Auth/SignUp';
 import LoginScreen from '../screens/Auth/Login';
-import OauthScreen from '../screens/Auth/OAuth';
-import {LOGIN, OAUTH, SIGNUP} from './routes';
+import {FORGOTPASSWORD, LOGIN, ONBOARDING, SIGNUP} from './routes';
+import OnboardingScreen from '../screens/Auth/Onboarding';
+import ForgotPassword from '../screens/Auth/ForgotPassword';
 
 const AuthStack: React.FC = () => {
   const Stack = createStackNavigator();
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen
+        options={{
+          gestureEnabled: false,
+        }}
+        name={ONBOARDING}
+        component={OnboardingScreen}
+      />
       <Stack.Screen
         options={{
           gestureEnabled: false,
@@ -29,8 +38,8 @@ const AuthStack: React.FC = () => {
         options={{
           gestureEnabled: false,
         }}
-        name={OAUTH}
-        component={OauthScreen}
+        name={FORGOTPASSWORD}
+        component={ForgotPassword}
       />
     </Stack.Navigator>
   );
